@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments :: head">
+</head>
+<body>
+<div th:replace="fragments :: header"></div>
+<div class="content">
+    <h1 style="text-align: center" class="mt-4">TOP3 OFERTY!!!</h1>
+
+    <div style="text-align: center">
+        <a href="/form">Dodaj mecz</a>
+
+        <a href="/list">Wyświetl mecze do obstawienia</a>
+
+        <a href="/archive">Wyświetl zakończone mecze</a>
+
+        <a href="/bets">Wyświetl kupony</a>
+    </div>
+
+    <br><br>
+
+    <div th:if="${matches}">
+    <ol>
+        <li th:each="match : ${matches}" style="text-align: center; font-size: 25px;">
+            <span th:text="${match.homeTeam.name} + ' vs ' + ${match.awayTeam.name}"></span>
+
+        </li>
+    </ol>
+    </div>
+
+</div>
+</body>
+</html>

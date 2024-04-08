@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments :: head">
+</head>
+<body>
+<div th:replace="fragments :: header"></div>
+
+<div class="content" style="text-align: center">
+    <h1 style="text-align: center" class="mt-4">Nadchodzące mecze</h1>
+    <a href="/">Wróć do strony głównej</a>
+    <a href="/archive">Wyświetl zakończone mecze</a>
+
+    <div th:if="${!matches.isEmpty()}" style="text-align: center">
+        <table style="margin: auto;">
+            <tr>
+                <th style="text-align: center">Mecz</th>
+                <th style="text-align: center">Data</th>
+                <th style="text-align: center">Edytuj mecz</th>
+                <th style="text-align: center">Usuń mecz</th>
+                <th style="text-align: center">Obstaw mecz</th>
+            </tr>
+            <tr th:each="match : ${matches}">
+                <td th:text="|${match.getHomeTeam().name}   -   ${match.getAwayTeam().name}|"></td>
+                <td th:text="|${#temporals.format(match.dateTime, 'yyyy-MM-dd HH:mm')}|"></td>
+                <td>
+                    <a th:href="@{/match/{id}/edit(id=${match.id})}">Edytuj</a>
+                </td>
+                <td>
+                    <a th:href="@{/match/{id}/delete(id=${match.id})}">Usuń</a>
+                </td>
+                <td>
+                    <a th:href="@{/match/{id}/bet(id=${match.id})}">Obstaw</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div th:if="${matches.isEmpty()}">
+        <h2>Brak nadchodzących meczów</h2>
+    </div>
+</div>
+</body>
+</html>

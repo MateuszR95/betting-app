@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments :: head">
+</head>
+<body>
+<div th:replace="fragments :: header"></div>
+<div class="content">
+    <h1 style="text-align: center" class="mt-4">Obstaw mecz</h1>
+
+    <div style="text-align: center;">
+        <a th:href="@{/}" style="display: inline-block;">Wróć do strony głównej</a>
+    </div>
+
+    <main>
+        <br>
+        <div th:text="${#temporals.format(match.dateTime, 'yyyy-MM-dd HH:mm')}"></div>
+        <div th:text="|${match.homeTeam.name} - ${match.awayTeam.name}|"></div>
+        <div th:text="|Kurs na zwycięsto gospodarzy: ${match.oddsOnHomeTeamToWin} zł|"></div>
+        <div th:text="|Kurs na zwycięsto gości: ${match.oddsOnAwayTeamToWin} zł|"></div>
+        <div th:text="|Kurs na remis: ${match.oddsOnDraw} zł|"></div>
+
+        <form th:action="@{/bet/submit}" th:object="${bet}" method="post">
+
+            <input type="hidden" name="match" th:value="${match.id}" />
+
+            <label>Imię:</label>
+            <input type="text" th:field="*{user.firstName}" /><br/><br/>
+
+            <label>Nazwisko:</label>
+            <input type="text" th:field="*{user.lastName}" /><br/><br/>
+
+            <label>Email:</label>
+            <input type="text" th:field="*{user.email}" /><br/><br/>
+
+            <input type="radio" th:field="*{userBet}" value="0"/> Remis<br/>
+            <input type="radio" th:field="*{userBet}" value="1"/> Zwycięstwo gospodarza<br/>
+            <input type="radio" th:field="*{userBet}" value="2"/> Zwycięstwo gości<br/><br/>
+
+            <label>Kwota zakładu:</label>
+            <input type="text" th:field="*{betAmount}" /><br/><br/>
+
+            <button type="submit">Złóż zakład</button>
+        </form>
+
+
+    </main>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments :: head">
+</head>
+<body>
+<div th:replace="fragments :: header"></div>
+<div class="content">
+    <h1 style="text-align: center" class="mt-4">Edytuj mecz</h1>
+
+    <div style="text-align: center;">
+        <a th:href="@{/}" style="display: inline-block;">Wróć do strony głównej</a>
+    </div>
+
+    <main style="text-align: center;">
+        <form th:action="@{/match/{id}/edit(id=${match.id})}" th:object="${match}" method="post" style="display: inline-block; text-align: center;">
+            <span>Edytuj mecz</span>
+            <br>
+            <label for="homeTeam">Gospodarz meczu:</label>
+            <select style="pointer-events: none;" id="homeTeam" name="homeTeam">
+                <option value="">Wybierz drużynę</option>
+                <th:block th:each="team : ${teams}">
+                    <option   th:value="${team.id}" th:text="${team.name}" th:field="*{homeTeam}"></option>
+                </th:block>
+            </select>
+            <br>
+            <label for="awayTeam">Drużyna gości:</label>
+            <select style="pointer-events: none;" id="awayTeam" name="awayTeam">
+                <option value="">Wybierz drużynę</option>
+                <th:block th:each="team : ${teams}">
+                    <option th:value="${team.id}" th:text="${team.name}" th:field="*{awayTeam}"></option>
+                </th:block>
+            </select>
+            <br>
+            <div th:if="${match.dateTime.isBefore(#temporals.createNow())}">
+                <label for="dateTime">Termin meczu:</label>
+                <input readonly="readonly" type="datetime-local" id="hidden-dateTime" name="dateTime" th:field="*{dateTime}">
+                <br>
+            </div>
+
+            <div th:if="${match.dateTime.isAfter(#temporals.createNow())}">
+                        <label for="dateTime">Termin meczu:</label>
+                        <input type="datetime-local" id="dateTime" name="dateTime" th:field="*{dateTime}">
+                        <br>
+            </div>
+
+            <div th:if="${!match.dateTime.isAfter(#temporals.createNow())}">
+                <label for="homeTeamScore">Wynik gospodarza:</label>
+                <input type="number" id="homeTeamScore" name="homeTeamScore" th:field="*{homeTeamScore}">
+                <br><br>
+                <label for="awayTeamScore">Wynik gości:</label>
+                <input type="number" id="awayTeamScore" name="awayTeamScore" th:field="*{awayTeamScore}">
+                <br><br>
+            </div>
+
+            <div th:if="${match.dateTime.isAfter(#temporals.createNow())}">
+                <input type="hidden" id="hiddenHomeTeamScore" name="homeTeamScore" value="-1">
+                <input type="hidden" id="hiddenAwayTeamScore" name="awayTeamScore" value="-1">
+            </div>
+
+            <button type="submit">Edytuj mecz</button>
+        </form>
+    </main>
+
+</div>
+</body>
+</html>
