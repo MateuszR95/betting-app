@@ -5,29 +5,34 @@
 <body>
 <div th:replace="fragments :: header"></div>
 <div class="content" style="text-align: center">
-    <h1 style="text-align: center" class="mt-4">Zakończone mecze</h1>
-    <a href="/">Wróć do strony głównej</a>
-    <a href="/list">Wyświetl nadchodzące mecze</a>
+    <h1 class="text-center">Zakończone mecze</h1>
+    <a th:href="@{/}">Wróć do strony głównej</a>
+    <a th:href="@{/list}">Wyświetl nadchodzące mecze</a>
 
     <div th:if="${!matches.isEmpty()}">
         <table style="margin: auto;">
             <tr>
-                <th style="text-align: center">Mecz</th>
-                <th style="text-align: center">Data</th>
-                <th style="text-align: center">Wynik</th>
-                <th style="text-align: center">Edytuj mecz</th>
-                <th style="text-align: center">Usuń mecz</th>
+                <th class="text-center">Mecz</th>
+                <th class="text-center">Data</th>
+                <th class="text-center">Wynik</th>
+                <th class="text-center">Edytuj mecz</th>
+                <th class="text-center">Usuń mecz</th>
             </tr>
             <tr th:each="match : ${matches}">
-                <td th:text="|${match.getHomeTeam().name}   -   ${match.getAwayTeam().name}|"></td>
+                <td th:text="|${match.homeTeam.name}   -   ${match.awayTeam.name}|"></td>
                 <td th:text="|${#temporals.format(match.dateTime, 'yyyy-MM-dd HH:mm')}|"></td>
-                <td th:text="${match.homeTeamScore == -1 ? 'bd' : match.homeTeamScore} + ' : '
-                + ${match.awayTeamScore == -1 ? 'bd' : match.awayTeamScore}"></td>
+                <td th:text="${match.homeTeamScore == null ? 'bd' : match.homeTeamScore} + ' : '
+                + ${match.awayTeamScore == null ? 'bd' : match.awayTeamScore}"></td>
                 <td>
                     <a th:href="@{/match/{id}/edit(id=${match.id})}">Edytuj</a>
                 </td>
                 <td>
-                    <a th:href="@{/match/{id}/delete(id=${match.id})}">Usuń</a>
+
+                    <form th:action="@{/match/{id}/delete(id=${match.id})}" method="post">
+                        <input type="hidden" name="_method" value="delete">
+                        <input type="submit" value="Usuń mecz">
+                    </form>
+
                 </td>
             </tr>
         </table>
@@ -36,6 +41,7 @@
 
         <h2>Brak nadchodzących meczów</h2>
 
+</div>
 </div>
 </body>
 </html>

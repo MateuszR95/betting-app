@@ -1,6 +1,7 @@
 package pl.mateusz.example.bettingapp.entities;
 
 import jakarta.persistence.*;
+import pl.mateusz.example.bettingapp.BetStatus;
 
 import java.math.BigDecimal;
 
@@ -17,8 +18,8 @@ public class Bet {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     private User user;
-
-    private int userBet; //0 - remis, 1- zwycięstwo gospodarza, 2- zwyciestwo gości
+    @Enumerated(EnumType.ORDINAL)
+    private BetStatus userBet;
     private BigDecimal betAmount;
 
     public Bet() {
@@ -48,11 +49,11 @@ public class Bet {
         this.user = user;
     }
 
-    public int getUserBet() {
+    public BetStatus getUserBet() {
         return userBet;
     }
 
-    public void setUserBet(int userBet) {
+    public void setUserBet(BetStatus userBet) {
         this.userBet = userBet;
     }
 

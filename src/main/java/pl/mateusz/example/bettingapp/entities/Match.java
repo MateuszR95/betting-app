@@ -14,10 +14,10 @@ public class Match {
     private Long id;
     @ManyToOne
     private Team homeTeam;
-    private int homeTeamScore;
+    private Integer homeTeamScore;
     @ManyToOne
     private Team awayTeam;
-    private int awayTeamScore;
+    private Integer awayTeamScore;
     private LocalDateTime dateTime;
     private BigDecimal oddsOnHomeTeamToWin;
     private BigDecimal oddsOnAwayTeamToWin;
@@ -44,11 +44,11 @@ public class Match {
         this.homeTeam = homeTeam;
     }
 
-    public int getHomeTeamScore() {
+    public Integer getHomeTeamScore() {
         return homeTeamScore;
     }
 
-    public void setHomeTeamScore(int homeTeamScore) {
+    public void setHomeTeamScore(Integer homeTeamScore) {
         this.homeTeamScore = homeTeamScore;
     }
 
@@ -60,11 +60,11 @@ public class Match {
         this.awayTeam = awayTeam;
     }
 
-    public int getAwayTeamScore() {
+    public Integer getAwayTeamScore() {
         return awayTeamScore;
     }
 
-    public void setAwayTeamScore(int awayTeamScore) {
+    public void setAwayTeamScore(Integer awayTeamScore) {
         this.awayTeamScore = awayTeamScore;
     }
 

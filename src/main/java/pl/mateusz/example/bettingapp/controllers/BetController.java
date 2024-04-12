@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.mateusz.example.bettingapp.dto.BetDto;
-import pl.mateusz.example.bettingapp.dto.MatchDto;
+import pl.mateusz.example.bettingapp.dto.MatchEditDto;
+import pl.mateusz.example.bettingapp.dto.MatchListDto;
+import pl.mateusz.example.bettingapp.exceptions.BetNotFoundException;
 import pl.mateusz.example.bettingapp.exceptions.MatchNotFoundException;
 import pl.mateusz.example.bettingapp.services.BetService;
 import pl.mateusz.example.bettingapp.services.MatchService;
@@ -28,10 +30,9 @@ public class BetController {
 
     @GetMapping("/match/{id}/bet")
     public String displayBetForm(@PathVariable Long id, Model model) {
-        Optional<MatchDto> matchOptional = matchService.getMatchById(id);
-        MatchDto matchDto = matchOptional.orElseThrow(MatchNotFoundException::new);
+        Optional<MatchListDto> matchDtoOptional = matchService.getMatchListDtoById(id);
+        MatchListDto matchDto = matchDtoOptional.orElseThrow(MatchNotFoundException::new);
         model.addAttribute("match", matchDto);
-        model.addAttribute("matchId", id);
         BetDto betDto = new BetDto();
         model.addAttribute("bet", betDto);
         return "bet-form";
@@ -39,8 +40,16 @@ public class BetController {
 
     @PostMapping("/bet/submit")
     public String submitBet(BetDto betDto) {
-        betService.addBet(betDto);
-        return "redirect:/list";
+        Long betId = betService.addBet(betDto);
+        return "redirect:/bet/" + betId;
+    }
+
+    @GetMapping("/bet/{id}")
+    public String viewBet(@PathVariable Long id, Model model) {
+        Optional<BetDto> betOptional = betService.getBetById(id);
+        BetDto betDto = betOptional.orElseThrow(BetNotFoundException::new);
+        model.addAttribute("bet", betDto);
+        return "bet-details";
     }
 
     @GetMapping("/bets")

@@ -1,32 +1,24 @@
 package pl.mateusz.example.bettingapp.dto;
 
-import jakarta.persistence.ManyToOne;
-import org.springframework.format.annotation.DateTimeFormat;
-import pl.mateusz.example.bettingapp.entities.Bet;
 import pl.mateusz.example.bettingapp.entities.Team;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
-public class MatchDto {
+public class MatchListDto {
     private Long id;
-    @ManyToOne
     private Team homeTeam;
-    private int homeTeamScore;
-    @ManyToOne
+    private Integer homeTeamScore;
     private Team awayTeam;
-    private int awayTeamScore;
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private Integer awayTeamScore;
     private LocalDateTime dateTime;
     private BigDecimal oddsOnHomeTeamToWin;
     private BigDecimal oddsOnAwayTeamToWin;
     private BigDecimal oddsOnDraw;
-    private List<Bet> bets;
 
-    public MatchDto(Long id, Team homeTeam, int homeTeamScore, Team awayTeam, int awayTeamScore,
-                    LocalDateTime dateTime, BigDecimal oddsOnHomeTeamToWin, BigDecimal oddsOnAwayTeamToWin,
-                    BigDecimal oddsOnDraw) {
+    public MatchListDto(Long id, Team homeTeam, Integer homeTeamScore, Team awayTeam, Integer awayTeamScore,
+                        LocalDateTime dateTime, BigDecimal oddsOnHomeTeamToWin, BigDecimal oddsOnAwayTeamToWin,
+                        BigDecimal oddsOnDraw) {
         this.id = id;
         this.homeTeam = homeTeam;
         this.homeTeamScore = homeTeamScore;
@@ -37,7 +29,6 @@ public class MatchDto {
         this.oddsOnAwayTeamToWin = oddsOnAwayTeamToWin;
         this.oddsOnDraw = oddsOnDraw;
     }
-
 
     public Long getId() {
         return id;
@@ -55,11 +46,11 @@ public class MatchDto {
         this.homeTeam = homeTeam;
     }
 
-    public int getHomeTeamScore() {
+    public Integer getHomeTeamScore() {
         return homeTeamScore;
     }
 
-    public void setHomeTeamScore(int homeTeamScore) {
+    public void setHomeTeamScore(Integer homeTeamScore) {
         this.homeTeamScore = homeTeamScore;
     }
 
@@ -71,12 +62,11 @@ public class MatchDto {
         this.awayTeam = awayTeam;
     }
 
-    public int getAwayTeamScore() {
+    public Integer getAwayTeamScore() {
         return awayTeamScore;
-
     }
 
-    public void setAwayTeamScore(int awayTeamScore) {
+    public void setAwayTeamScore(Integer awayTeamScore) {
         this.awayTeamScore = awayTeamScore;
     }
 
@@ -110,14 +100,6 @@ public class MatchDto {
 
     public void setOddsOnDraw(BigDecimal oddsOnDraw) {
         this.oddsOnDraw = oddsOnDraw;
-    }
-
-    public List<Bet> getBets() {
-        return bets;
-    }
-
-    public void setBets(List<Bet> bets) {
-        this.bets = bets;
     }
 }
 

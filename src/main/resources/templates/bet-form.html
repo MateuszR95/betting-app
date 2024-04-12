@@ -5,7 +5,7 @@
 <body>
 <div th:replace="fragments :: header"></div>
 <div class="content">
-    <h1 style="text-align: center" class="mt-4">Obstaw mecz</h1>
+    <h1 class="text-center">Obstaw mecz</h1>
 
     <div style="text-align: center;">
         <a th:href="@{/}" style="display: inline-block;">Wróć do strony głównej</a>
@@ -32,9 +32,9 @@
             <label>Email:</label>
             <input type="text" th:field="*{user.email}" /><br/><br/>
 
-            <input type="radio" th:field="*{userBet}" value="0"/> Remis<br/>
-            <input type="radio" th:field="*{userBet}" value="1"/> Zwycięstwo gospodarza<br/>
-            <input type="radio" th:field="*{userBet}" value="2"/> Zwycięstwo gości<br/><br/>
+            <input type="radio" th:field="*{userBet}" value="DRAW"/> Remis<br/>
+            <input type="radio" th:field="*{userBet}" value="HOME_WIN"/> Zwycięstwo gospodarza<br/>
+            <input type="radio" th:field="*{userBet}" value="AWAY_WIN"/> Zwycięstwo gości<br/><br/>
 
             <label>Kwota zakładu:</label>
             <input type="text" th:field="*{betAmount}" /><br/><br/>
