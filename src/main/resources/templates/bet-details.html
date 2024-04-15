@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments :: head">
+</head>
+<body>
+<div th:replace="fragments :: header"></div>
+
+<div class="text-center">
+    <h1 class="text-center">Twój kupon</h1>
+    <a th:href="@{/}">Wróć do strony głównej</a>
+    <a th:href="@{/list}">Pokaż inne mecze do obstawienia</a>
+
+
+        <table style="margin: auto;">
+            <tr>
+                <th>Mecz</th>
+                <th>Data</th>
+                <th>Wynik meczu</th>
+                <th>Kwota zakładu</th>
+                <th>Typ</th>
+                <th>Wygrana</th>
+            </tr>
+
+            <tr>
+                <td th:text="|${bet.match.homeTeam.name} vs ${bet.match.awayTeam.name}|">Mecz</td>
+                <td th:text="|${#temporals.format(bet.match.dateTime, 'yyyy-MM-dd HH:mm')}|">Data</td>
+                <td th:text="${bet.match.homeTeamScore == null ? 'bd' : bet.match.homeTeamScore} + ' : '+
+                ${bet.match.awayTeamScore == null ? 'bd' : bet.match.awayTeamScore}">Wynik</td>
+                <td th:text="|${bet.betAmount}zł|">Kwota</td>
+                <td th:text="|${bet.userBet == 0 ? 'Remis' : (bet.userBet == 1 ? 'Zwycięstwo gospodarza' : 'Zwycięstwo gości')}|">Typ</td>
+                <td th:text="${bet.match.homeTeamScore == null && bet.match.awayTeamScore == null ?
+                 'Aktywny kupon' : bet.getAmountWon() + 'zł'}">Wygrana</td>
+
+            </tr>
+
+        </table>
+</div>
+</body>
+</html>

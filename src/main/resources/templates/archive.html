@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments :: head">
+</head>
+<body>
+<div th:replace="fragments :: header"></div>
+<div class="content" style="text-align: center">
+    <h1 class="text-center">Zakończone mecze</h1>
+    <a th:href="@{/}">Wróć do strony głównej</a>
+    <a th:href="@{/list}">Wyświetl nadchodzące mecze</a>
+
+    <div th:if="${!matches.isEmpty()}">
+        <table style="margin: auto;">
+            <tr>
+                <th class="text-center">Mecz</th>
+                <th class="text-center">Data</th>
+                <th class="text-center">Wynik</th>
+                <th class="text-center">Edytuj mecz</th>
+                <th class="text-center">Usuń mecz</th>
+            </tr>
+            <tr th:each="match : ${matches}">
+                <td th:text="|${match.homeTeam.name}   -   ${match.awayTeam.name}|"></td>
+                <td th:text="|${#temporals.format(match.dateTime, 'yyyy-MM-dd HH:mm')}|"></td>
+                <td th:text="${match.homeTeamScore == null ? 'bd' : match.homeTeamScore} + ' : '
+                + ${match.awayTeamScore == null ? 'bd' : match.awayTeamScore}"></td>
+                <td>
+                    <a th:href="@{/match/{id}/edit(id=${match.id})}">Edytuj</a>
+                </td>
+                <td>
+
+                    <form th:action="@{/match/{id}/delete(id=${match.id})}" method="post">
+                        <input type="hidden" name="_method" value="delete">
+                        <input type="submit" value="Usuń mecz">
+                    </form>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div th:if="${matches.isEmpty()}">
+
+        <h2>Brak nadchodzących meczów</h2>
+
+</div>
+</div>
+</body>
+</html>

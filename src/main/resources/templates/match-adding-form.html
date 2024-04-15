@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments :: head">
+</head>
+<body>
+<div th:replace="fragments :: header"></div>
+<div class="content">
+    <h1 class="text-center">Dodaj mecz</h1>
+
+    <div class="text-center">
+        <a th:href="@{/}" style="display: inline-block;">Wróć do strony głównej</a>
+    </div>
+
+    <main class="text-center">
+        <form action="/add" method="post">
+            <label for="homeTeamId">Gospodarz meczu:</label>
+            <select id="homeTeamId" name="homeTeamId">
+                <option value="">Wybierz drużynę</option>
+                <th:block th:each="team : ${teams}">
+                    <option th:value="${team.id}" th:text="${team.name}"></option>
+                </th:block>
+            </select>
+            <br><br>
+            <label for="awayTeamId">Drużyna gości:</label>
+            <select id="awayTeamId" name="awayTeamId">
+                <option value="">Wybierz drużynę</option>
+                <th:block th:each="team : ${teams}">
+                    <option th:value="${team.id}" th:text="${team.name}"></option>
+                </th:block>
+            </select>
+            <br><br>
+            <label for="dateTime">Termin meczu:</label>
+            <input type="datetime-local" id="dateTime" name="dateTime">
+            <div th:if="${error}" style="color: red;">
+                <span th:text="${error}"></span>
+            </div>
+
+            <br><br>
+            <label for="oddsOnHomeTeamToWin">Kurs na zwycięstwo gospodarza:</label>
+            <input type="number" id="oddsOnHomeTeamToWin" name="oddsOnHomeTeamToWin" step="0.01">
+            <br><br>
+            <label for="oddsOnAwayTeamToWin">Kurs na zwycięstwo gości:</label>
+            <input type="number" id="oddsOnAwayTeamToWin" name="oddsOnAwayTeamToWin" step="0.01">
+            <br><br>
+            <label for="oddsOnDraw">Kurs na remis:</label>
+            <input type="number" id="oddsOnDraw" name="oddsOnDraw" step="0.01">
+            <br><br>
+            <input type="submit" value="Dodaj">
+        </form>
+    </main>
+</div>
+</body>
+</html>
